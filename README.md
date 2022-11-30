@@ -1,2 +1,2 @@
 # WEBT-Exam
-Final project for the WEBT module in the HSLU
+Final project for the WEBT module from the HSLU
