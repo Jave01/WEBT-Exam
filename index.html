@@ -9,53 +9,117 @@
             href="https://www.w3schools.com/w3css/4/w3.css"
         />
         <link rel="stylesheet" href="./css/style.css" />
+        <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
 
-        <title>Galaxy</title>
+        <title>Galaxy Builder</title>
     </head>
-    <body class="w3-black">
-        <nav class="w3-bar w3-center w3-top w3-padding-16">
-            <a
-                href="#header1"
-                class="w3-bar-item w3-button w3-hover-none w3-hover-text-white w3-text-grey"
-                >Top</a
-            >
-            <a
-                href="#Information"
-                class="w3-bar-item w3-button w3-hover-none w3-hover-text-white w3-text-grey"
-                >Information</a
-            >
-            <a
-                href="#input-form"
-                class="w3-bar-item w3-button w3-hover-none w3-hover-text-white w3-text-grey"
-                >Input</a
-            >
+    <body class="w3-black w3-center">
+        <nav class="w3-bar">
+            <div class="bar-item-container">
+                <a
+                    href="./index.html"
+                    class="bar-item w3-bar-item w3-button w3-mobile"
+                    >HOME</a
+                >
+                <a
+                    href="./index.html#information"
+                    class="bar-item w3-bar-item w3-button w3-mobile"
+                    >INFORMATION</a
+                >
+                <a
+                    href="./index.html#input-form"
+                    class="bar-item w3-bar-item w3-button w3-mobile"
+                    >CALCULATOR</a
+                >
+            </div>
         </nav>
-        <header><h1 id="header1">Header 1</h1></header>
-        <img
-            src="./img/galaxy.jpg"
-            alt="Galaxy wallpaper image"
-            class="w3-image"
-        />
-        <main class="w3-content">
+        <div class="w3-display-container">
+            <img
+                src="./img/galaxy.jpg"
+                alt="Galaxy wallpaper image"
+                class="w3-image"
+            />
+            <header class="w3-display-middle">
+                <h1 id="header1">Galaxy Creator</h1>
+            </header>
+        </div>
+        <main class="w3-content" id="main">
             <section id="information">
-                <p>There will be some Information here later</p>
+                <p class="w3-center information-text">
+                    Our galaxy is something beautiful and complex. But have you
+                    ever had the desire to create your own? If so, you have the
+                    possibilty to do it right here, right now. Well not a
+                    galaxy, but a solar system. Which is a good start, isn't it?
+                </p>
             </section>
-            <section>
-                <form action="" id="input-form">
-                    <label for="text1">Text1</label>
-                    <input type="text" name="text1" class="w3-input" />
-                    <label for="text2">Text2</label>
-                    <input type="text" name="text2" class="w3-input" />
-                    <input type="submit" value="Submit" class="w3-input" />
-                </form>
-            </section>
+            <select
+                class="w3-select w3-margin w3-center"
+                v-model="planetCount"
+                name="planet-count"
+                id="planet-count"
+            >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+
+            <p>Number of planets: {{ planetCount }}</p>
+
+            <form action="action.php" id="input-form">
+                <fieldset
+                    v-for="i in 3"
+                    class="w3-row-padding w3-round w3-margin"
+                >
+                    <legend>{{ "Planet " + i}}</legend>
+                    <div class="w3-col s6 m6 l6">
+                        <label for="'planet-name' + i">Name</label>
+                        <input
+                            type="text"
+                            name="'planet-name' + i"
+                            class="w3-input"
+                        />
+                    </div>
+                    <div class="w3-col s6 m6 l6">
+                        <label for="'planet-distance' + i"
+                            >Distance to sun</label
+                        >
+                        <input
+                            type="number"
+                            name="'planet-distance' + i"
+                            min="0"
+                            class="w3-input"
+                        />
+                    </div>
+                </fieldset>
+                <input
+                    class="w3-button w3-round w3-border w3-border-white"
+                    type="submit"
+                    value="Render"
+                />
+            </form>
 
             <!-- <canvas id="canvas" width="1900" height="1000"></canvas> -->
         </main>
+
         <footer class="w3-text-color-grey w3-padding-64 w3-center">
             <p>Created by David Jäggli</p>
-            <a href="https://github.com/Jave01/WEBT-Exam">Github repo</a>
+            <p>
+                Code on
+                <a
+                    href="https://github.com/Jave01/WEBT-Exam"
+                    class="w3-hover-text-blue"
+                    target="_blank"
+                    >Github</a
+                >
+            </p>
         </footer>
-        <script src="./js/script.js"></script>
+        <script>
+            Vue.createApp({
+                data() {
+                    return { planetCount: 1 };
+                },
+            }).mount("#main");
+        </script>
     </body>
 </html>
