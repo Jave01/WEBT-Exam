@@ -8,7 +8,7 @@
             rel="stylesheet"
             href="https://www.w3schools.com/w3css/4/w3.css"
         />
-        <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="css\\style.css" />
         <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
 
         <title>Galaxy Builder</title>
@@ -40,68 +40,126 @@
                 class="w3-image"
             />
             <header class="w3-display-middle">
-                <h1 id="header1">Galaxy Creator</h1>
+                <h1>Galaxy Builder</h1>
+                <p>Form the galaxy the way you want</p>
             </header>
         </div>
         <main class="w3-content" id="main">
             <section id="information">
-                <p class="w3-center information-text">
+                <p class="information-text std-text">
                     Our galaxy is something beautiful and complex. But have you
                     ever had the desire to create your own? If so, you have the
-                    possibilty to do it right here, right now. Well not a
-                    galaxy, but a solar system. Which is a good start, isn't it?
+                    possibilty to do it right here, right now. Well not exactly
+                    a galaxy, but a solar system. Which is a good start, isn't
+                    it?
                 </p>
             </section>
-            <select
-                class="w3-select w3-margin w3-center"
-                v-model="planetCount"
-                name="planet-count"
-                id="planet-count"
-            >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-
-            <p>Number of planets: {{ planetCount }}</p>
-
-            <form action="action.php" id="input-form">
-                <fieldset
-                    v-for="i in 3"
-                    class="w3-row-padding w3-round w3-margin"
+            <hr class="hr" />
+            <section id="instructions-sect">
+                <h2>How to use</h2>
+                <p class="std-text instruction-text">
+                    1. Select the amount of planets <br />
+                    2. Give your planets the needed attributes
+                    <br />
+                    3. Click 'render' and enjoy
+                </p>
+                <p class="std-text instruction-text w3-center">
+                    Note: if you've already rendered at least once, you can
+                    click 'render last' to render your last input.
+                </p>
+            </section>
+            <hr class="hr" />
+            <section>
+                <h2>Your planets</h2>
+                <label for="planet-count" class="std-text">Planet count:</label>
+                <select
+                    class="select w3-margin w3-center"
+                    v-model="planetCount"
+                    name="planet-count"
+                    id="planet-count"
                 >
-                    <legend>{{ "Planet " + i}}</legend>
-                    <div class="w3-col s6 m6 l6">
-                        <label for="'planet-name' + i">Name</label>
-                        <input
-                            type="text"
-                            name="'planet-name' + i"
-                            class="w3-input"
-                        />
-                    </div>
-                    <div class="w3-col s6 m6 l6">
-                        <label for="'planet-distance' + i"
-                            >Distance to sun</label
-                        >
-                        <input
-                            type="number"
-                            name="'planet-distance' + i"
-                            min="0"
-                            class="w3-input"
-                        />
-                    </div>
-                </fieldset>
+                    <option value="none" disabled selected>
+                        Select the amount of planets
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </section>
+            <form action="action.php" id="input-form">
+                <article v-for="i in 4">
+                    <fieldset
+                        v-if="planetCount >= i"
+                        class="w3-row-padding w3-padding-16 w3-margin w3-round w3-margin"
+                    >
+                        <legend>{{ "Planet " + i}}</legend>
+                        <div class="w3-col s3 m3 l3">
+                            <label v-bind:for="'planet-distance' + i"
+                                >Distance</label
+                            >
+                            <input
+                                v-bind:name="'planet-distance' + i"
+                                type="number"
+                                min="1"
+                                max="10"
+                                class="w3-input"
+                                @keypress="isNumber($event)"
+                                required
+                            />
+                        </div>
+                        <div class="w3-col s3 m3 l3">
+                            <label v-bind:for="'planet-speed' + i">Speed</label>
+                            <input
+                                v-bind:name="'planet-speed' + i"
+                                type="number"
+                                min="1"
+                                max="10"
+                                class="w3-input"
+                                @keypress="isNumber($event)"
+                                required
+                            />
+                        </div>
+                        <div class="w3-col s3 m3 l3">
+                            <label v-bind:for="'planet-size' + i">Size</label>
+                            <input
+                                v-bind:name="'planet-size' + i"
+                                type="number"
+                                min="5"
+                                max="10"
+                                class="w3-input"
+                                @keypress="isNumber($event)"
+                                required
+                            />
+                        </div>
+                        <div class="w3-col s3 m3 l3">
+                            <label v-bind:for="'planet-color' + i">Color</label>
+                            <!-- Standard color blue, just because blue is a nice color -->
+                            <input
+                                v-bind:name="'planet-color' + i"
+                                type="color"
+                                value="#2828D2"
+                                class="w3-input"
+                                required
+                            />
+                        </div>
+                    </fieldset>
+                </article>
+                <input
+                    class="w3-button w3-round w3-border w3-border-white w3-margin-right"
+                    type="submit"
+                    id="render-new"
+                    value="Render new"
+                />
                 <input
                     class="w3-button w3-round w3-border w3-border-white"
                     type="submit"
-                    value="Render"
+                    id="render-last"
+                    value="Render last"
+                    disabled="true"
                 />
             </form>
-
-            <!-- <canvas id="canvas" width="1900" height="1000"></canvas> -->
         </main>
-
         <footer class="w3-text-color-grey w3-padding-64 w3-center">
             <p>Created by David Jäggli</p>
             <p>
@@ -114,10 +172,26 @@
                 >
             </p>
         </footer>
+        <script src="js/index.js"></script>
         <script>
+            // prevent invalid form input
             Vue.createApp({
                 data() {
                     return { planetCount: 1 };
+                },
+                methods: {
+                    isNumber: function (evt) {
+                        var charCode = evt.keyCode;
+                        if (
+                            charCode > 31 &&
+                            (charCode < 48 || charCode > 57) &&
+                            charCode !== 46
+                        ) {
+                            evt.preventDefault();
+                        } else {
+                            return true;
+                        }
+                    },
                 },
             }).mount("#main");
         </script>

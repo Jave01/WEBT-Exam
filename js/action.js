@@ -1,19 +1,18 @@
 let app = Vue.createApp({
     d: 50,
     data() {
-        return { range: 50 };
+        return { range: 25 };
     },
 }).mount("body");
 
-console.log(app);
-
-const fps = 60; // frames per second
-const fpsTimeout = 1000 / fps;
+const FPS = 60; // frames per second
+const FPS_TIMEOUT = 1000 / FPS;
+const MAX_CANVAS_SIZE = 900;
 
 let canvas = document.getElementById("solarSystemCanvas");
 let context = canvas.getContext("2d");
-let square_size = 900;
-let base_speed = (2 * Math.PI) / fps;
+let square_size = MAX_CANVAS_SIZE;
+let base_speed = (2 * Math.PI) / FPS;
 
 let planet1 = newPlanet(100, 1, 10, "blue");
 let planet2 = newPlanet(200, 5, 5, "red");
@@ -23,6 +22,7 @@ const planets = [planet1, planet2, planet3];
 window.addEventListener("resize", updateSize, false);
 
 function updateSize() {
+    // update the canvas size to adjust to new/changin screen sizes
     let width = window.innerWidth;
     let height = window.innerHeight;
 
@@ -34,13 +34,15 @@ function updateSize() {
 
 function animate() {
     // Time for next frame
-    setTimeout(animate, fpsTimeout);
+    setTimeout(animate, FPS_TIMEOUT);
 
-    // Update planet positions
+    // Update planet canvas frame
     update();
 
+    // clear the canvs
     context.clearRect(0, 0, square_size, square_size);
 
+    // draw the planets on their new positions
     draw();
 }
 
@@ -85,19 +87,21 @@ function draw(c) {
 
 function newPlanet(posRadius, speed, entityRadius, color) {
     let planet = {
-        // calculate the relative distance, reference is the max canvas size (700)
-        x: (posRadius / 900) * square_size,
+        // calculate the relative distance, reference is the max canvas size (900)
+        x: (posRadius / MAX_CANVAS_SIZE) * square_size,
         y: 0,
         angle: 0,
-        entityRadius: entityRadius,
-        posRadius: (posRadius / 700) * square_size,
+        entityRadius: (entityRadius / MAX_CANVAS_SIZE) * square_size,
+        posRadius: (posRadius / MAX_CANVAS_SIZE) * square_size,
         speed: base_speed / speed,
         color: color,
         update() {
-            this.posRadius = (posRadius / 700) * square_size;
+            let user_input_speed = document.getElementById("speed").value / 20;
+            this.posRadius = (posRadius / MAX_CANVAS_SIZE) * square_size;
             this.x = Math.cos(this.angle) * this.posRadius;
             this.y = Math.sin(this.angle) * this.posRadius;
-            this.angle += this.speed % (2 * Math.PI);
+            this.angle += (this.speed * user_input_speed) % (2 * Math.PI);
+            this.entityRadius = (entityRadius / MAX_CANVAS_SIZE) * square_size;
         },
     };
     return planet;
