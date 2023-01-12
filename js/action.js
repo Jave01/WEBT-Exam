@@ -12,14 +12,42 @@ const MAX_CANVAS_SIZE = 900;
 let canvas = document.getElementById("solarSystemCanvas");
 let context = canvas.getContext("2d");
 let square_size = MAX_CANVAS_SIZE;
-let base_speed = (2 * Math.PI) / FPS;
+let base_speed = (2 * Math.PI) / FPS / 5;
 
-let planet1 = newPlanet(100, 1, 10, "blue");
-let planet2 = newPlanet(200, 5, 5, "red");
-let planet3 = newPlanet(300, 2, 25, "green");
-const planets = [planet1, planet2, planet3];
+let planets = [];
+
+// let planet1 = newPlanet(100, 1, 10, "blue");
+// let planet2 = newPlanet(200, 5, 5, "red");
+// let planet3 = newPlanet(300, 2, 25, "green");
+// const planets = [planet1, planet2, planet3];
 
 window.addEventListener("resize", updateSize, false);
+
+window.onload = (e) => {
+    let cookies = decodeURIComponent(document.cookie).split(";");
+    let distance = 0;
+    let speed = 0;
+    let color = 0;
+
+    cookies.forEach((c) => {
+        if (c.includes("planet-distance")) {
+            distance = c.split("=")[1];
+        }
+        if (c.includes("planet-speed")) {
+            speed = parseInt(c.split("=")[1]);
+        }
+        if (c.includes("planet-color")) {
+            color = c.split("=")[1];
+        }
+        if (distance != 0 && speed != 0 && color != 0) {
+            let planet = newPlanet(distance * 100, speed, 10, color);
+            planets.push(planet);
+            distance = 0;
+            speed = 0;
+            color = 0;
+        }
+    });
+};
 
 function updateSize() {
     // update the canvas size to adjust to new/changin screen sizes
@@ -53,11 +81,6 @@ function update() {
 }
 
 function draw(c) {
-    // c.beginPath();
-    // c.fillStyle = "Black";
-    // c.font = "bold 50pt Arial ";
-    // c.fillText("Planets", position[0], position[1]);
-
     // draw sun
     context.fillStyle = "yellow";
     context.beginPath();
@@ -87,13 +110,13 @@ function draw(c) {
 
 function newPlanet(posRadius, speed, entityRadius, color) {
     let planet = {
-        // calculate the relative distance, reference is the max canvas size (900)
+        // calculate the relative distance, reference is the max canvas size
         x: (posRadius / MAX_CANVAS_SIZE) * square_size,
         y: 0,
         angle: 0,
         entityRadius: (entityRadius / MAX_CANVAS_SIZE) * square_size,
         posRadius: (posRadius / MAX_CANVAS_SIZE) * square_size,
-        speed: base_speed / speed,
+        speed: (base_speed * speed * 100) / posRadius,
         color: color,
         update() {
             let user_input_speed = document.getElementById("speed").value / 20;

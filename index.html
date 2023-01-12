@@ -61,7 +61,10 @@
                     1. Select the amount of planets <br />
                     2. Give your planets the needed attributes
                     <br />
-                    3. Click 'render' and enjoy
+                    3. Click 'render' and enjoy <br />
+                    <br />
+                    The units are relative to earth. So for example 2 distance
+                    is twice the distance from the sun to earth.
                 </p>
                 <p class="std-text instruction-text w3-center">
                     Note: if you've already rendered at least once, you can
@@ -87,13 +90,23 @@
                     <option value="4">4</option>
                 </select>
             </section>
-            <form action="action.php" id="input-form">
+            <form action="action.php" method="post" id="input-form">
                 <article v-for="i in 4">
                     <fieldset
                         v-if="planetCount >= i"
                         class="w3-row-padding w3-padding-16 w3-margin w3-round w3-margin"
                     >
                         <legend>{{ "Planet " + i}}</legend>
+                        <div class="w3-col s3 m3 l3">
+                            <label v-bind:for="'planet-name' + i">Name</label>
+                            <input
+                                v-bind:name="'planet-name' + i"
+                                maxlength="15"
+                                type="text"
+                                class="w3-input"
+                                required
+                            />
+                        </div>
                         <div class="w3-col s3 m3 l3">
                             <label v-bind:for="'planet-distance' + i"
                                 >Distance</label
@@ -102,10 +115,11 @@
                                 v-bind:name="'planet-distance' + i"
                                 type="number"
                                 min="1"
-                                max="10"
+                                max="5"
                                 class="w3-input"
                                 @keypress="isNumber($event)"
                                 required
+                                step="0.1"
                             />
                         </div>
                         <div class="w3-col s3 m3 l3">
@@ -113,23 +127,12 @@
                             <input
                                 v-bind:name="'planet-speed' + i"
                                 type="number"
-                                min="1"
+                                min="-10"
                                 max="10"
                                 class="w3-input"
                                 @keypress="isNumber($event)"
                                 required
-                            />
-                        </div>
-                        <div class="w3-col s3 m3 l3">
-                            <label v-bind:for="'planet-size' + i">Size</label>
-                            <input
-                                v-bind:name="'planet-size' + i"
-                                type="number"
-                                min="5"
-                                max="10"
-                                class="w3-input"
-                                @keypress="isNumber($event)"
-                                required
+                                step="0.1"
                             />
                         </div>
                         <div class="w3-col s3 m3 l3">
@@ -151,26 +154,19 @@
                     id="render-new"
                     value="Render new"
                 />
-                <input
-                    class="w3-button w3-round w3-border w3-border-white"
-                    type="submit"
-                    id="render-last"
-                    value="Render last"
-                    disabled="true"
-                />
+                <a href="action.php">
+                    <input
+                        class="w3-button w3-round w3-border w3-border-white"
+                        id="render-last"
+                        type="button"
+                        value="Render last"
+                        disabled="true"
+                    />
+                </a>
             </form>
         </main>
         <footer class="w3-text-color-grey w3-padding-64 w3-center">
             <p>Created by David Jäggli</p>
-            <p>
-                Code on
-                <a
-                    href="https://github.com/Jave01/WEBT-Exam"
-                    class="w3-hover-text-blue"
-                    target="_blank"
-                    >Github</a
-                >
-            </p>
         </footer>
         <script src="js/index.js"></script>
         <script>

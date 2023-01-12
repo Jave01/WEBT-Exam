@@ -1,4 +1,4 @@
-function updateRenderLastButton() {
+window.onload = function () {
     let btn = document.getElementById("render-last");
     if (document.cookie.search("last_val_present") != -1) {
         let cookie_val = document.cookie
@@ -14,6 +14,4 @@ function updateRenderLastButton() {
     } else {
         btn.disabled = true;
     }
-}
-
-updateRenderLastButton();
+};
