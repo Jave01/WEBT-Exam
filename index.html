@@ -115,7 +115,7 @@
                                 v-bind:name="'planet-distance' + i"
                                 type="number"
                                 min="1"
-                                max="5"
+                                max="4"
                                 class="w3-input"
                                 @keypress="isNumber($event)"
                                 required
@@ -137,7 +137,6 @@
                         </div>
                         <div class="w3-col s3 m3 l3">
                             <label v-bind:for="'planet-color' + i">Color</label>
-                            <!-- Standard color blue, just because blue is a nice color -->
                             <input
                                 v-bind:name="'planet-color' + i"
                                 type="color"

@@ -38,7 +38,7 @@
         const ATTR_COUNT = 4;
 
         const MIN_DISTANCE = 1;
-        const MAX_DISTANCE = 5;
+        const MAX_DISTANCE = 4;
         const MIN_SPEED = -10;
         const MAX_SPEED = 10;
         const MIN_SIZE = 5;
@@ -116,13 +116,11 @@
                     } else if ($name == "planet-color"){
                         $val = str_replace("#", "", $val);
                         $val = intval($val, 16);
-                        $val = $val > $max ? $max : $val;
-                        $val = $val < $min ? $min : $val;
+                        $val = $val > $max ? $max : ($val < $min ? $min : $val); 
                         $val = "#" . dechex($val);
                     }
                     else{
-                        $planet_attr[$attr_name] = $val > $max ? $max : $val;
-                        $planet_attr[$attr_name] = $val < $min ? $min : $val;
+                        $planet_attr[$attr_name] = ($val > $max) ? $max : ($val < $min ? $min : $val);
                     }
                     setcookie($attr_name, $planet_attr[$attr_name]);
                     $_COOKIE[$attr_name] = $planet_attr[$attr_name];
