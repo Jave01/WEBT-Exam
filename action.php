@@ -41,8 +41,6 @@
         const MAX_DISTANCE = 4;
         const MIN_SPEED = -10;
         const MAX_SPEED = 10;
-        const MIN_SIZE = 5;
-        const MAX_SIZE = 10;
         const MIN_COLOR_VAL = 0;
         const MAX_COLOR_VAL = 0xFFFFFF;
         const MIN_NAME_LEN = 1;
