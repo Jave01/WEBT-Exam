@@ -43,3 +43,9 @@ input[type="color"] {
     border-top: dotted 4px;
     margin: 6rem auto;
 }
+
+.error-msg {
+    margin: 1rem auto;
+    width: 50%;
+    height: 2rem;
+}

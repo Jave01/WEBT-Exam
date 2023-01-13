@@ -81,12 +81,10 @@
                 }
             }
 
-            // prevent more than 4 planets
             $planet_count = (count($planet_attr) / ATTR_COUNT);
             $planet_count = $planet_count > MAX_PLANETS ? MAX_PLANETS : $planet_count;
             setcookie("planet-count", $planet_count);
 
-            // delete all cookies before setting the new ones
             $past = time() - 3600;
             foreach ( $_COOKIE as $key => $value )
             {
@@ -120,7 +118,8 @@
                         $val = "#" . dechex($val);
                     }
                     else{
-                        $planet_attr[$attr_name] = ($val > $max) ? $max : ($val < $min ? $min : $val);
+                        $val = ($val > $max) ? $max : ($val < $min ? $min : $val);
+                        $planet_attr[$attr_name] = round($val, 0, PHP_ROUND_HALF_EVEN);
                     }
                     setcookie($attr_name, $planet_attr[$attr_name]);
                     $_COOKIE[$attr_name] = $planet_attr[$attr_name];

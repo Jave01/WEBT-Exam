@@ -16,11 +16,6 @@ let base_speed = (2 * Math.PI) / FPS / 5;
 
 let planets = [];
 
-// let planet1 = newPlanet(100, 1, 10, "blue");
-// let planet2 = newPlanet(200, 5, 5, "red");
-// let planet3 = newPlanet(300, 2, 25, "green");
-// const planets = [planet1, planet2, planet3];
-
 window.addEventListener("resize", updateSize, false);
 
 window.onload = (e) => {
@@ -28,7 +23,6 @@ window.onload = (e) => {
     let distance = 0;
     let speed = 0;
     let color = 0;
-
     cookies.forEach((c) => {
         if (c.includes("planet-distance")) {
             distance = c.split("=")[1];
@@ -53,7 +47,6 @@ function updateSize() {
     // update the canvas size to adjust to new/changin screen sizes
     let width = window.innerWidth;
     let height = window.innerHeight;
-
     // create square with the smaller value
     square_size = width > height ? height : width;
     canvas.width = square_size;
@@ -63,13 +56,10 @@ function updateSize() {
 function animate() {
     // Time for next frame
     setTimeout(animate, FPS_TIMEOUT);
-
     // Update planet canvas frame
     update();
-
     // clear the canvs
     context.clearRect(0, 0, square_size, square_size);
-
     // draw the planets on their new positions
     draw();
 }
@@ -92,7 +82,6 @@ function draw(c) {
         2 * Math.PI
     );
     context.fill();
-
     // draw planets
     for (let i = 0; i < planets.length; i++) {
         context.fillStyle = planets[i].color;
